@@ -11,11 +11,26 @@
 
 <body>
   <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-        <% if logged_in? %><a href="/logout" class="btn btn-primary">Logout</a><% end %>
-      </div>
-    </div>
+    <nav class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <% if !logged_in? %>
+        <li class="nav-item">
+          <a class="nav-link" href="/signin">Signin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signup">Signup</a>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/<%= current_user.username %>">My recipes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      <% end %>
+    </nav>
     <%= yield %>
   </div>
 
