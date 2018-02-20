@@ -1,6 +1,4 @@
-class Users < ApplicationController
-  has_many :recipes
-  has_many :ingredients, through: :recipes
-  has_secure_password
+class UsersController < ApplicationController
+
 
 end
