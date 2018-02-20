@@ -20,6 +20,13 @@ class UsersController < ApplicationController
     end
   end
 
+  get '/users/:slug' do
+    @user = User.find_by(username: params[:slug])
+    if @user
+      erb :'/users/user_recipes'
+    end
+  end
+
   get '/logout' do
     session.destroy
     redirect '/recipes'
