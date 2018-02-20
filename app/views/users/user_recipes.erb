@@ -12,7 +12,7 @@
             <p class="card-text"><%= recipe.description %></p>
             <% if logged_in? && current_user == @user %>
               <a href="/recipes/<%= recipe.id %>/edit" class="card-link">Edit</a>
-              <form action="/recipes/<%= recipe.id %>/delete">
+              <form action="/recipes/<%= recipe.id %>/delete" method="post">
                 <input type="hidden" name="_method" value="delete">
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>

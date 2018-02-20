@@ -1,12 +1,17 @@
 class RecipesController < ApplicationController
 
-  get '/recipes' do
-    erb :'/recipes/recipes'
+  delete '/recipes/:id/delete' do
+    if logged_in? && current_user.id == session[:user_id]
+      recipe = Recipe.find(params[:id])
+      recipe.delete
+      redirect "/users/#{current_user.username}"
+    else
+      redirect '/'
+    end
   end
 
-  delete '/recipes/:id/delete' do
-    recipe = Recipe.find(params[:id])
-    recipe.delete
+  get '/recipes' do
+    erb :'/recipes/recipes'
   end
 
 end
