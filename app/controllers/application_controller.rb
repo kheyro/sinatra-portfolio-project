@@ -9,6 +9,10 @@ class ApplicationController < Sinatra::Base
 		set :session_secret, "password_security"
   end
 
+  get '/' do
+    redirect '/recipes'
+  end
+
   helpers do
     def logged_in?
       !!session[:user_id]
