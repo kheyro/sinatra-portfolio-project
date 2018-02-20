@@ -6,17 +6,17 @@
 <div class="row">
   <div class="col">
       <% @user.recipes.each do |recipe| %>
-        <div class="card text-center">
+        <div class="card w-50">
           <div class="card-body">
             <h5 class="card-title"><%= recipe.name %></h5>
             <p class="card-text"><%= recipe.description %></p>
             <% if logged_in? && current_user == @user %>
               <a href="/recipes/<%= recipe.id %>/edit" class="card-link">Edit</a>
-              <a href="/recipes/<%= recipe.id %>/delete" class="card-link"><Delete></Delete></a>
+              <a href="/recipes/<%= recipe.id %>/delete" class="card-link">Delete</a>
             <% end %>
           </div>
           <div class="card-footer text-muted">
-            Cooking time: <%= recipe.cooking_time %> min. - Author: <a href="/users/<%= @user.username %>"><%= @user.name %></a>
+            Cooking time: <%= recipe.cooking_time %> min - Author: <a href="/users/<%= @user.username %>"><%= @user.name %></a>
           </div>
         </div>
       <% end %>
