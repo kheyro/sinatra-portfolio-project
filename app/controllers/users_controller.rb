@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   post '/signup' do
     params[:user][:role_id] = 2
+    params[:user][:username] = params[:user][:username].gsub(" ", "-").downcase
     user = User.new(params[:user])
     if user.save
       session[:user_id] = user.id
