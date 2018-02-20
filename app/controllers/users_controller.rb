@@ -9,14 +9,13 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    if !params[:username].blank? && !params[:password].blank?
-      user = User.create(params)
-      if user
-        session[:user_id] = user.id
-        redirect "/users/#{user.username}"
-      else
-        redirect '/signup'
-      end
+    params[:user][:role_id] = 2
+    user = User.new(params[:user])
+    if user.save
+      session[:user_id] = user.id
+      redirect "/users/#{user.username}"
+    else
+      redirect '/signup'
     end
   end
 
