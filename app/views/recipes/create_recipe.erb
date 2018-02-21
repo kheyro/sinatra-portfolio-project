@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col">
+    <h1>Add a recipe</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <form action="/recipes" method="post">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" name="[recipe]name">
+      </div>
+      <div class="form-group">
+        <label for="name">Description</label>
+        <textarea class="form-control" id="description" placeholder="Enter description" name="[recipe]description" rows="10"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="col-md-8 mb-3">
+          <label for="ingredient">Select an ingredient</label>
+          <select id="ingredient" class="custom-select">
+            <option selected>Ingredients</option>
+            <% @ingredients.each do |ingredient| %>
+              <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="quantity">Quantity</label>
+          <input type="text" class="form-control" id="quantity" placeholder="Quantity">
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="unit">Unit</label>
+          <select id="unit" class="custom-select">
+            <option selected>Unit</option>
+            <option value="1">g</option>
+            <option value="2">ml</option>
+            <option value="3">L</option>
+            <option value="4">cup</option>
+            <option value="4">spoon</option>
+            <option value="4">tea spoon</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
+</div>
