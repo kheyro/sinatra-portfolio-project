@@ -17,6 +17,24 @@ class IngredientsController < ApplicationController
     end
   end
 
+  get '/ingredients/:id/edit' do
+    if logged_in?
+      @ingredient = Ingredient.find_by_id(params[:id])
+      erb :'/ingredients/edit_ingredient'
+    end
+  end
+
+  patch '/ingredients/:id' do
+    if logged_in?
+      ingredient = Ingredient.find_by_id(params[:id])
+      ingredient.update(name: params[:name])
+      ingredient.save
+      redirect '/ingredients'
+    else
+      redirect '/recipes'
+    end
+  end
+
   get '/ingredients' do
     if logged_in?
       @ingredients = Ingredient.all
