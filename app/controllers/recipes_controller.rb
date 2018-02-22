@@ -13,6 +13,26 @@ class RecipesController < ApplicationController
     end
   end
 
+  get '/recipes/:id' do
+    @recipe = Recipe.find_by_id(params[:id])
+    erb :'/recipes/show_recipe'
+  end
+
+  post '/recipes' do
+    if logged_in?
+      recipe = Recipe.create(params[:recipe])
+      recipe.quantities << Quantity.create(params[:quantity])
+
+      if recipe.save
+        current_user.recipes << recipe
+        current_user.save
+        redirect "/recipes/#{recipe.id}"
+      else
+        redirect "/recipes/add"
+      end
+    end
+  end
+
   delete '/recipes/:id/delete' do
     if logged_in? && current_user.id == session[:user_id]
       recipe = Recipe.find(params[:id])
