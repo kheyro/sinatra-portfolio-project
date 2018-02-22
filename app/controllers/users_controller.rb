@@ -38,8 +38,10 @@ class UsersController < ApplicationController
 
   get '/users/:slug' do
     @user = User.find_by(username: params[:slug])
-    if @user
+    if @user.username != "admin"
       erb :'/users/user_recipes'
+    else
+      redirect '/ingredients'
     end
   end
 

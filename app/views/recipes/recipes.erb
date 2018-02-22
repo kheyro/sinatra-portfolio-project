@@ -3,3 +3,20 @@
     <h1>Welcome to Social Recipes</h1>
   </div>
 </div>
+
+<div class="row">
+  <div class="col">
+    <% @recipes.each do |recipe| %>
+      <div class="card w-50">
+        <div class="card-body">
+          <h5 class="card-title"><a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a></h5>
+          <p class="card-text"><%= recipe.description %></p>
+        </div>
+        <div class="card-footer text-muted">
+          Cooking time: <%= recipe.cooking_time %> min - Author: <a href="/users/<%= recipe.user.username %>"><%= recipe.user.name %></a>
+        </div>
+      </div>
+      <br><br>
+    <% end %>
+  </div>
+</div>
