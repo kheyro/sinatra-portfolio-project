@@ -35,12 +35,21 @@ class IngredientsController < ApplicationController
     end
   end
 
+  get '/ingredients/:id/delete' do
+    if logged_in?
+      ingredient = Ingredient.find_by_id(params[:id])
+      ingredient.delete
+      redirect '/ingredients'
+    else
+      redirect '/recipes'
+    end
+  end
+
   get '/ingredients' do
     if logged_in?
       @ingredients = Ingredient.all
       erb :'/ingredients/ingredients'
     end
   end
-
 
 end

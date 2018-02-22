@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 20180220102045) do
     t.string "name"
   end
 
-  create_table "recipe_ingredients", force: :cascade do |t|
-    t.integer "recipe_id"
-    t.integer "ingredient_id"
+  create_table "quantities", force: :cascade do |t|
     t.decimal "quantity"
     t.string "unit"
+    t.integer "recipe_id"
+    t.integer "ingredient_id"
   end
 
   create_table "recipes", force: :cascade do |t|
