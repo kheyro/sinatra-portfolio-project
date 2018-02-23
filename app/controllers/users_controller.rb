@@ -30,6 +30,8 @@ class UsersController < ApplicationController
       if user.authenticate(params[:user][:password])
         session[:user_id] = user.id
         redirect "/users/#{user.username}"
+      else
+        redirect '/signin'
       end
     else
       redirect '/'

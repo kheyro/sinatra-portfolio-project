@@ -7,14 +7,7 @@
 <div class="row">
   <div class="col-3">
     <h3>Ingredients <span class="badge badge-info"><%= @recipe.quantities.size %></span></h3>
-    <ul class="list-group">
-      <% @recipe.quantities.each do |quantity| %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <%= quantity.ingredient.name %>
-          <span class="badge badge-primary badge-pill"><%= quantity.quantity %> <%= quantity.unit %></span>
-        </li>
-      <% end %>
-    </ul>
+
   </div>
   <div class="col-9">
     <div class="row">

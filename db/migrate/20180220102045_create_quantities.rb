@@ -3,8 +3,8 @@ class CreateQuantities < ActiveRecord::Migration[5.1]
     create_table :quantities do |t|
       t.decimal :quantity
       t.string  :unit
-      t.integer :recipe_id,     null: false
-      t.integer :ingredient_id, null: false
+      t.integer :recipe_id
+      t.integer :ingredient_id
     end
   end
 end

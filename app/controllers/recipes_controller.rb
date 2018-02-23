@@ -14,6 +14,14 @@ class RecipesController < ApplicationController
     end
   end
 
+  get '/recipes/:id/edit' do
+    if logged_in?
+      @recipe = Recipe.find_by_id(params[:id])
+      @ingredients = Ingredient.all
+      erb :'/recipes/edit_recipe'
+    end
+  end
+
   get '/recipes/:id' do
     @recipe = Recipe.find_by_id(params[:id])
     erb :'/recipes/show_recipe'
@@ -22,6 +30,7 @@ class RecipesController < ApplicationController
   post '/recipes' do
     if logged_in?
       recipe = Recipe.create(params[:recipe])
+      params[:quantity] = params[:quantity].delete_if { |q| q[:ingredient_id] == "Ingredient" }
       recipe.quantities << Quantity.create(params[:quantity])
 
       if recipe.save
