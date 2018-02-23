@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <h1><%= @user.name %>'s recipe</h1>
+    <h1><%= @user.name %>'s recipe <span class="badge badge-primary badge-pill"><%= @user.recipes.size %></span></h1>
     <% if logged_in? && current_user == @user %>
       <div class="btn-add">
         <a href="/recipes/add" class="btn btn-info">Add Recipe</a>
