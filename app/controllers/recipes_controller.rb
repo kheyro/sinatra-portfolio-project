@@ -45,8 +45,7 @@ class RecipesController < ApplicationController
 
   delete '/recipes/:id/delete' do
     if logged_in? && current_user.id == session[:user_id]
-      recipe = Recipe.find(params[:id])
-      recipe.delete
+      Recipe.destroy(params[:id])
       redirect "/users/#{current_user.username}"
     else
       redirect '/'
