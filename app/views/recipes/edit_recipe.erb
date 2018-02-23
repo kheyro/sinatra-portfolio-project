@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col">
-    <h1>Add a recipe</h1>
+    <h1>Edit my recipe</h1>
   </div>
 </div>
 
 <div class="row">
   <div class="col-5">
     <form action="/recipes/<%= @recipe.id %>" method="post">
-      <input type="hidden" name="_method" action="patch">
+      <input type="hidden" name="_method" value="patch">
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" placeholder="Enter name" name="[recipe]name" value="<%= @recipe.name %>">
@@ -31,25 +31,25 @@
             <label for="ingredient">Select ingredient <%= i.to_s %></label>
             <select id="ingredient" class="custom-select" name="quantity[][ingredient_id]">
               <option selected>Ingredient</option>
-              <% @ingredients.each do |ingredient| %>
-                <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
+              <% @ingredients.each do |ing| %>
+                <option value="<%= ing.id %>" <%= 'selected' if @recipe.quantities[i-1] && @recipe.quantities[i-1].ingredient.id == ing.id %>><%= ing.name %></option>
               <% end %>
             </select>
           </div>
           <div class="col-md-2 mb-3">
             <label for="quantity">Quantity</label>
-            <input type="text" class="form-control" id="quantity" name="quantity[][quantity]" placeholder="Quantity">
+            <input type="text" class="form-control" id="quantity" name="quantity[][quantity]" value="<%= @recipe.quantities[i-1].quantity if @recipe.quantities[i-1] %>" placeholder="Quantity">
           </div>
           <div class="col-md-2 mb-3">
             <label for="unit">Unit</label>
             <select id="unit" class="custom-select" name="quantity[][unit]">
               <option selected>Unit</option>
-              <option value="g">g</option>
-              <option value="ml">ml</option>
-              <option value="l">L</option>
-              <option value="cup">cup</option>
-              <option value="spoon">spoon</option>
-              <option value="tea spoon">tea spoon</option>
+              <option value="g" <%= 'selected' if @recipe.quantities[i-1] && @recipe.quantities[i-1].unit == 'g' %>>g</option>
+              <option value="ml" <%= 'selected' if @recipe.quantities[i-1] && @recipe.quantities[i-1].unit == 'ml' %>>ml</option>
+              <option value="l" <%= 'selected' if @recipe.quantities[i-1] && @recipe.quantities[i-1].unit == 'l' %>>L</option>
+              <option value="cup" <%= 'selected' if @recipe.quantities[i-1] && @recipe.quantities[i-1].unit == 'cup' %>>cup</option>
+              <option value="spoon" <%= 'selected' if @recipe.quantities[i-1] && @recipe.quantities[i-1].unit == 'spoon' %>>spoon</option>
+              <option value="tea spoon" <%= 'selected' if @recipe.quantities[i-1] && @recipe.quantities[i-1].unit == 'tea spoon' %>>tea spoon</option>
             </select>
           </div>
         </div>

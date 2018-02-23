@@ -15,7 +15,8 @@ class RecipesController < ApplicationController
   end
 
   get '/recipes/:id/edit' do
-    if logged_in?
+    recipe = Recipe.find(params[:id])
+    if logged_in? && current_user.id == recipe.user.id
       @recipe = Recipe.find_by_id(params[:id])
       @ingredients = Ingredient.all
       erb :'/recipes/edit_recipe'
@@ -27,13 +28,33 @@ class RecipesController < ApplicationController
     erb :'/recipes/show_recipe'
   end
 
+  patch '/recipes/:id' do
+    recipe = Recipe.find(params[:id])
+    if logged_in? && current_user.id == recipe.user.id
+      recipe.update(params[:recipe])
+      # check validation in model
+      if recipe.save
+        # Remove unselected ingredient (dropdown list)
+        params[:quantity] = params[:quantity].delete_if { |q| q[:ingredient_id] == "Ingredient" }
+        recipe.quantities.delete_all
+        recipe.quantities << Quantity.create(params[:quantity])
+        # current_user.recipes << recipe
+        # current_user.save
+        redirect "/recipes/#{recipe.id}"
+      else
+        redirect "/recipes/add"
+      end
+    end
+  end
+
   post '/recipes' do
     if logged_in?
-      recipe = Recipe.create(params[:recipe])
-      params[:quantity] = params[:quantity].delete_if { |q| q[:ingredient_id] == "Ingredient" }
-      recipe.quantities << Quantity.create(params[:quantity])
-
+      recipe = Recipe.new(params[:recipe])
+      # check validation in model
       if recipe.save
+        # Remove unselected ingredient (dropdown list)
+        params[:quantity] = params[:quantity].delete_if { |q| q[:ingredient_id] == "Ingredient" }
+        recipe.quantities << Quantity.create(params[:quantity])
         current_user.recipes << recipe
         current_user.save
         redirect "/recipes/#{recipe.id}"
@@ -44,7 +65,8 @@ class RecipesController < ApplicationController
   end
 
   delete '/recipes/:id/delete' do
-    if logged_in? && current_user.id == session[:user_id]
+    recipe = Recipe.find(params[:id])
+    if logged_in? && current_user.id == recipe.user.id
       Recipe.destroy(params[:id])
       redirect "/users/#{current_user.username}"
     else
