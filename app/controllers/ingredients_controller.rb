@@ -32,7 +32,6 @@ class IngredientsController < ApplicationController
     if logged_in? && current_user.username == "admin"
       ingredient = Ingredient.find_by_id(params[:id])
       ingredient.update(name: params[:name])
-      ingredient.save
       redirect '/ingredients'
     else
       redirect '/recipes'

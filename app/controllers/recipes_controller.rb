@@ -37,9 +37,7 @@ class RecipesController < ApplicationController
         # Remove unselected ingredient (dropdown list)
         params[:quantity] = params[:quantity].delete_if { |q| q[:ingredient_id] == "Ingredient" }
         recipe.quantities.delete_all
-        recipe.quantities << Quantity.create(params[:quantity])
-        # current_user.recipes << recipe
-        # current_user.save
+        recipe.quantities.create(params[:quantity])
         redirect "/recipes/#{recipe.id}"
       else
         redirect "/recipes/add"
@@ -54,9 +52,9 @@ class RecipesController < ApplicationController
       if recipe.save
         # Remove unselected ingredient (dropdown list)
         params[:quantity] = params[:quantity].delete_if { |q| q[:ingredient_id] == "Ingredient" }
-        recipe.quantities << Quantity.create(params[:quantity])
-        current_user.recipes << recipe
-        current_user.save
+        recipe.quantities.create(params[:quantity])
+        recipe.user = current_user
+        recipe.save
         redirect "/recipes/#{recipe.id}"
       else
         redirect "/recipes/add"

@@ -9,9 +9,9 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    params[:user][:role_id] = 2
     params[:user][:username] = params[:user][:username].gsub(" ", "-").downcase
     user = User.new(params[:user])
+    user.role = 2
     if user.save
       session[:user_id] = user.id
       redirect "/users/#{user.username}"
